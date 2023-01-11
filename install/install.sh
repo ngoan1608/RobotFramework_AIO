@@ -178,6 +178,7 @@ function packaging_python_windows() {
 
 	logresult "$?" "installed required packges for Python" "install required packges for Python"
 
+	$destDir/python39/python.exe -m pip install pyfranca
 }
 
 #
