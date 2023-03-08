@@ -75,8 +75,11 @@ jobs:
   build-windows:
     name: Build Windows package
     runs-on: windows-latest
+    needs: tag-repos
+    if: ${{ ! failure() && ! cancelled() }}
     env:
       GENDOC_LATEXPATH: C:/texlive/2022/bin/win32
+
     steps:
       - name: Support long path in git
         run: git config --system core.longpaths true
