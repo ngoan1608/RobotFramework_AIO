@@ -44,8 +44,8 @@ USAGE = """Usage: git-tag.py <tag_name> <tag_repos.json>
 git-tag tool helps to tag git repos via REST APIs of git server.
 Currently, tool support 3 types of git server: Github, Gitlab and Bitbucket.
 Due to security, the credentials (PAT: Personal Access Token) to access the 
-repos should be set as environment variables: <git-server-type>_PAT (upper case).
-E.g: GITHUB_PAT, GITLAB_PAT and BITBUCKET_PAT
+repos should be set as environment variables: PAT_<git-server-type> (upper case).
+E.g: PAT_GITHUB, PAT_GITLAB and PAT_BITBUCKET
 
 positional arguments:
    <tag_name>         tag name which is used for tagging repos. E.g: rel/0.5.2.1.
@@ -104,7 +104,7 @@ class GitServer(object):
       self.PAT     = PAT
       
       if not self.PAT:
-         err_msg(f"No provided {self._GIT_SERVER_TYPE.upper()}_PAT")
+         err_msg(f"No provided PAT_{self._GIT_SERVER_TYPE.upper()}")
       self.token_type = "Bearer"
 
    @staticmethod
@@ -389,9 +389,9 @@ if __name__=="__main__":
       PAT = None
 
       try:
-         PAT = os.environ[f"{git_type.upper()}_PAT"]
+         PAT = os.environ[f"PAT_{git_type.upper()}"]
       except Exception:
-         err_msg(f"There is no environment variable ({git_type.upper()}_PAT) for Personal Access Token")
+         err_msg(f"There is no environment variable (PAT_{git_type.upper()}) for Personal Access Token")
 
       if 'base_url' not in repo_data:
          if git_type != 'github':
