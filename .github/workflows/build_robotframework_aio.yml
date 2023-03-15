@@ -68,7 +68,11 @@ jobs:
 
       - name: Install dependencies - texlive
         shell: bash
-        run: ./requirements_windows.sh
+        run: |
+          ./requirements_windows.sh
+          cat C:/ProgramData/chocolatey/logs/chocolatey.log
+          ls -alh C:/texlive/2022/bin/win32
+          ls -alh C:/tools/install-tl-15032303
 
       - name: Install required texlive packages
         # shell: bash
