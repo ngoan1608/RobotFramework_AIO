@@ -32,12 +32,14 @@ texlive_packages=(
 
 choco install texlive --version=2022.20221202 --params "'/InstallationPath:C:\texlive /collections:pictures,latex'"
 
-tlmgr="C:/texlive/2022/bin/win32/tlmgr.bat"
+# tlmgr="C:/texlive/2022/bin/win32/tlmgr.bat"
 
-# Update TeX Live package database
-$tlmgr update --self --all
+# # Update TeX Live package database
+# $tlmgr update --self --all
 
-# Install each package in the list
-for package in ${texlive_packages[@]}; do
-  $tlmgr install "$package"
-done
+# # Install each package in the list
+# for package in ${texlive_packages[@]}; do
+#   $tlmgr install "$package"
+# done
+
+export texlive_packages
