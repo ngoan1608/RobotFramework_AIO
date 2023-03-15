@@ -30,11 +30,11 @@ for package in ${texlive_packages[@]}; do
   extra_packages+="$package,"
 done
 
-choco install texlive --version=2022.20221202 --params "'/collections:pictures,latex,latexextra,latexrecommended'" --execution-timeout 5400
+choco install texlive --version=2022.20221202 --params "'/collections:pictures,latex'" --execution-timeout 5400
 
 # cat C:/ProgramData/chocolatey/logs/chocolatey.log
 
-tlmgr="C:/texlive/2022/bin/win32/tlmgr"
+tlmgr="C:/texlive/2022/bin/win32/tlmgr.bat"
 
 # Update TeX Live package database
 $tlmgr update --self --all
