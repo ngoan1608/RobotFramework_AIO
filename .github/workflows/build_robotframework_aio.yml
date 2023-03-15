@@ -70,16 +70,16 @@ jobs:
         shell: bash
         run: ./requirements_windows.sh
 
-      # - name: Install required texlive packages
+      - name: Install required texlive packages
         # shell: bash
         # run: ./requirements_windows.sh
-        # shell: cmd
-        # run: |
-        #   tlmgr update --self --all
-        #   for package in ${{ env.texlive_packages }}; do
-        #     echo "install package: $package"
-        #     tlmgr install $package
-        #   done
+        shell: cmd
+        run: |
+          tlmgr update --self --all
+          for package in ${{ env.texlive_packages }}; do
+            echo "install package: $package"
+            tlmgr install $package
+          done
 
       - name: Clone repositories
         shell: bash
