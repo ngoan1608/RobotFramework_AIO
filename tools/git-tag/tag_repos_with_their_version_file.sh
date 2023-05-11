@@ -13,7 +13,7 @@
 . $(dirname $0)/../../include/bash/common.sh
 
 git_server="github"
-project="test-fullautomation"
+project="ngoan1608"
 git_base_url="https://github.com"
 
 function tag_single_repo(){

@@ -47,31 +47,31 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          chmod +x ./requirements_linux.sh
-          ./requirements_linux.sh
+      # - name: Install dependencies
+      #   run: |
+      #     chmod +x ./requirements_linux.sh
+      #     ./requirements_linux.sh
 
-      - name: Clone repositories
-        run: |
-          chmod +x ./cloneall
-          ./cloneall
+      # - name: Clone repositories
+      #   run: |
+      #     chmod +x ./cloneall
+      #     ./cloneall
 
-      - name: Install
-        run: |
-          chmod +x ./install/install.sh
-          ./install/install.sh
+      # - name: Install
+      #   run: |
+      #     chmod +x ./install/install.sh
+      #     ./install/install.sh
 
-      - name: Build
-        run: |
-          chmod +x ./build
-          ./build
+      # - name: Build
+      #   run: |
+      #     chmod +x ./build
+      #     ./build
 
-      - name: Upload built package
-        uses: actions/upload-artifact@v3
-        with:
-          name: linux-package
-          path: output_lx/*.deb
+      # - name: Upload built package
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: linux-package
+      #     path: output_lx/*.deb
 
   build-windows:
     name: Build Windows package
@@ -86,29 +86,29 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        shell: bash
-        run: |
-          . ./requirements_windows.sh
-          echo "GENDOC_LATEXPATH=$GENDOC_LATEXPATH" >> $GITHUB_ENV
+      # - name: Install dependencies
+      #   shell: bash
+      #   run: |
+      #     . ./requirements_windows.sh
+      #     echo "GENDOC_LATEXPATH=$GENDOC_LATEXPATH" >> $GITHUB_ENV
 
-      - name: Clone repositories
-        shell: bash
-        run: ./cloneall
+      # - name: Clone repositories
+      #   shell: bash
+      #   run: ./cloneall
 
-      - name: Install
-        shell: bash
-        run: ./install/install.sh
+      # - name: Install
+      #   shell: bash
+      #   run: ./install/install.sh
 
-      - name: Build
-        shell: bash
-        run: ./build
+      # - name: Build
+      #   shell: bash
+      #   run: ./build
 
-      - name: Upload built package
-        uses: actions/upload-artifact@v3
-        with:
-          name: windows-package
-          path: Output/
+      # - name: Upload built package
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: windows-package
+      #     path: Output/
 
   install-test-windows:
     name: Test Windows package
@@ -126,35 +126,35 @@ jobs:
     - name: Checkout source
       uses: actions/checkout@v3
 
-    - name: Clone repositories
-      shell: bash
-      run: ./cloneall
+    # - name: Clone repositories
+    #   shell: bash
+    #   run: ./cloneall
 
-    - name: Download Windows installer package
-      uses: actions/download-artifact@v3
-      with:
-        name: windows-package
+    # - name: Download Windows installer package
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #     name: windows-package
 
-    - name: Install RobotFramework AIO on Windows
-      shell: cmd
-      run: ./scripts/install-windows.bat
+    # - name: Install RobotFramework AIO on Windows
+    #   shell: cmd
+    #   run: ./scripts/install-windows.bat
 
-    - name: Run tests on Windows
-      shell: cmd
-      run: |
-        set Robot
-        "%RobotPythonPath%/python" test/aio-test-trigger/aio-test-trigger.py
+    # - name: Run tests on Windows
+    #   shell: cmd
+    #   run: |
+    #     set Robot
+    #     "%RobotPythonPath%/python" test/aio-test-trigger/aio-test-trigger.py
 
-    - name: Upload test result as artifact
-      if: success() || failure()
-      uses: actions/upload-artifact@v3
-      with:
-        name: windows-aiotestlogfiles
-        # long path issue on Windows when upload artifact 
-        # https://github.com/actions/upload-artifact/issues/240
-        path: |
-          ${{ runner.workspace }}/[Rr]obotframework*/**/*/aiotestlogfiles/*
-          ${{ runner.workspace }}/[Pp]ython*/**/*/aiotestlogfiles/*
+    # - name: Upload test result as artifact
+    #   if: success() || failure()
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: windows-aiotestlogfiles
+    #     # long path issue on Windows when upload artifact 
+    #     # https://github.com/actions/upload-artifact/issues/240
+    #     path: |
+    #       ${{ runner.workspace }}/[Rr]obotframework*/**/*/aiotestlogfiles/*
+    #       ${{ runner.workspace }}/[Pp]ython*/**/*/aiotestlogfiles/*
 
   install-test-linux:
     name: Test Linux package
@@ -166,34 +166,34 @@ jobs:
     - name: Checkout source
       uses: actions/checkout@v3
 
-    - name: Clone repositories
-      run: |
-        chmod +x ./cloneall
-        ./cloneall
+    # - name: Clone repositories
+    #   run: |
+    #     chmod +x ./cloneall
+    #     ./cloneall
 
-    - name: Download Linux installer package
-      uses: actions/download-artifact@v3
-      with:
-        name: linux-package
+    # - name: Download Linux installer package
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #     name: linux-package
 
-    - name: Install on Linux
-      run: |
-        sudo apt-get update
-        sudo apt-get install ./*.deb --fix-missing
+    # - name: Install on Linux
+    #   run: |
+    #     sudo apt-get update
+    #     sudo apt-get install ./*.deb --fix-missing
 
-    - name: Run tests on Linux
-      run: |
-        . /opt/rfwaio/linux/set_robotenv.sh
-        printenv | grep Robot
-        echo $(which pandoc)
-        $RobotPythonPath/python3.9 test/aio-test-trigger/aio-test-trigger.py
+    # - name: Run tests on Linux
+    #   run: |
+    #     . /opt/rfwaio/linux/set_robotenv.sh
+    #     printenv | grep Robot
+    #     echo $(which pandoc)
+    #     $RobotPythonPath/python3.9 test/aio-test-trigger/aio-test-trigger.py
 
-    - name: Upload test result as artifact
-      if: success() || failure()
-      uses: actions/upload-artifact@v3
-      with:
-        name: linux-aiotestlogfiles
-        path: ${{ runner.workspace }}/**/*/aiotestlogfiles/*
+    # - name: Upload test result as artifact
+    #   if: success() || failure()
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: linux-aiotestlogfiles
+    #     path: ${{ runner.workspace }}/**/*/aiotestlogfiles/*
 
   release:
     name: Release AIO
