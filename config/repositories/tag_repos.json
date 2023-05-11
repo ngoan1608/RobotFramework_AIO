@@ -1,7 +1,6 @@
 {
    "github" : {
       "project" : "ngoan1608",
-      "infix_tag" : "aio/",
       "repos"   : {
          "python-genpackagedoc": "",
          "python-pytestlog2db": "",
