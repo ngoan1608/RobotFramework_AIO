@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 env:
-  GITHUB_PAT : ${{ secrets.GITHUB_TOKEN }} 
+  GITHUB_PAT : ${{ secrets.PAT_GITHUB }} 
   TRIGGER_BY: ${{ github.ref_type }}
   TAG_NAME: ${{ github.ref_name }}
   REF_NAME: ${{ github.ref_name }}
