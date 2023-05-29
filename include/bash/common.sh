@@ -63,6 +63,7 @@ function create_testsuitmanagement_package_context_file(){
 		rm "$package_context_pathfile"
 	fi
 	echo "Creating 'package_context.json' file for RobotFramework_TestsuitesManagement ..."
+ echo "$package_context"
 	echo "$package_context" > "$package_context_pathfile"
 	logresult "$?" "created '$package_context_pathfile'" "create '$package_context_pathfile'"
 }
