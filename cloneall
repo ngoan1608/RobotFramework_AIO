@@ -63,9 +63,13 @@ function parse_repo () {
 		if [[ "$TRIGGER_BY" =~ $TAG_REGEX || "$TRIGGER_BY" == "tag" ]] && [[ "$TAG_NAME" =~ $TAG_REGEX ]]; then
 			clone_update_repo "../$repo_name" "$repo_url" "$TAG_NAME"
 		else
+			commit_branch=$(git config -f $conf_file --get $repo_type.$repo_name)
+			echo "commit: $commit_branch"
 			# Test changes from robotframework-documentation
 			if [[ "$repo_name" == "robotframework-documentation" ]]; then
 				clone_update_repo "../$repo_name" "$repo_url" "ntd1hc/feat/robotframework-dbus-and-robotframework-qconnect-winapp-integration"
+			elif [[ "$repo_name" == "robotframework-dbus" ]]; then
+				clone_update_repo "../$repo_name" "$repo_url" "cuongnht/feat/add_config_docs_for_dbus"
 			else
 				clone_update_repo "../$repo_name" "$repo_url"
 			fi
