@@ -52,6 +52,8 @@ jobs:
 
       - name: Install dependencies and set environment variables
         run: |
+          sudo apt-get update
+          sudo apt-get install --fix-missing
           chmod +x ./requirements_linux.sh
           ./requirements_linux.sh
           echo "AIO_VERSION_DATE=$(date +%m.%Y)" >> $GITHUB_ENV
@@ -72,7 +74,7 @@ jobs:
       - name: Build
         run: |
           chmod +x ./build
-          ./build
+          sudo ./build
 
       - name: Upload built package
         uses: actions/upload-artifact@v3

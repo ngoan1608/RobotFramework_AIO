@@ -121,7 +121,7 @@ function get_server_url()
 	return
 }
 
-function install_texlive_2022 () {
+function install_texlive () {
 	CDIR=$(pwd)
 	mkdir -p download
 	cd download
@@ -160,8 +160,8 @@ function check_and_install_texlive () {
 			return 0
 		fi
 	fi
-	install_texlive_2022
-	export GENDOC_LATEXPATH=/usr/local/texlive/2022/bin/x86_64-linux
+	install_texlive
+	export GENDOC_LATEXPATH=`dirname "$(which pdflatex)"`
 }
 
 function parse_repo () {
