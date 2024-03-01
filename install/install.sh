@@ -30,6 +30,7 @@ use_cntlm="No"
 python_only="No"
 vscode_only="No"
 pandoc_only="No"
+android_only="No"
 
 UNAME=$(uname)
 
@@ -39,6 +40,10 @@ if [ "$UNAME" == "Linux" ] ; then
 
 	archived_python_file=$sourceDir/cpython-3.9.2-x86_64-unknown-linux-gnu-pgo-20210303T0937.tar.zst
 	archived_vscode_file=$sourceDir/VSCodium-linux-x64-1.73.0.22306.tar.gz
+
+	download_android_platformtools=https://dl.google.com/android/repository/platform-tools_r35.0.0-linux.zip
+	download_appium_inspector=https://github.com/appium/appium-inspector/releases/download/v2024.2.2/Appium-Inspector-linux-2024.2.2.AppImage
+
 elif [[ "$UNAME" == CYGWIN* || "$UNAME" == MINGW* ]] ; then
 	download_python_url=https://github.com/indygreg/python-build-standalone/releases/download/20221220/cpython-3.9.16+20221220-x86_64-pc-windows-msvc-shared-install_only.tar.gz
 	download_vscode_url=https://github.com/VSCodium/vscodium/releases/download/1.73.0.22306/VSCodium-win32-x64-1.73.0.22306.zip
@@ -47,6 +52,10 @@ elif [[ "$UNAME" == CYGWIN* || "$UNAME" == MINGW* ]] ; then
 	archived_python_file=$sourceDir/cpython-3.9.16+20221220-x86_64-pc-windows-msvc-shared-install_only.tar.gz
 	archived_vscode_file=$sourceDir/VSCodium-win32-x64-1.73.0.22306.zip
 	archived_pandoc_file=$sourceDir/pandoc-2.18-windows-x86_64.zip
+
+	download_android_platformtools=https://dl.google.com/android/repository/platform-tools_r35.0.0-windows.zip
+	download_nodejs=https://nodejs.org/dist/v20.11.1/node-v20.11.1-x64.msi
+	download_appium_inspector=https://github.com/appium/appium-inspector/releases/download/v2024.2.2/Appium-Inspector-windows-2024.2.2-x64.exe
 else
 	errormsg "Operation system '$UNAME' is not supported."
 fi
@@ -65,6 +74,7 @@ function parse_arg() {
 		--python) echo "Create Python repo only";python_only="Yes"; shift;;
 		--vscode) echo "Create vscode repo only";vscode_only="Yes"; shift;;
 		--pandoc) echo "Create pandoc repo only";pandoc_only="Yes"; shift;;
+		--android) echo "Create android repo only";android_only="Yes"; shift;;
 
 		-*) echo "unknown option: $1" >&2; exit 1;;
 	esac
@@ -181,6 +191,41 @@ function packaging_pandoc_windows() {
 	export PATH=$PATH:$destDir/pandoc
 }
 
+function packaging_android() {
+	echo "Packaging Android package"
+
+	if [ "$UNAME" == "Linux" ] ; then
+		echo "Under developing"
+		return 0
+	fi
+	mkdir android
+
+	# download Node.js installer
+	echo "Downloading Node.js"
+	download_package "Node.js" $download_nodejs ./android/node.msi
+
+	# download appium packages:
+	# 	- appium server 
+	echo "Installing appium server"
+	npm install --prefix ./android appium
+
+	#  - UIAutomator2 driver for appium
+	echo "Installing UIAutomator2 driver for appium"
+	export APPIUM_SKIP_CHROMEDRIVER_INSTALL=1
+	npm install --prefix ./android appium-uiautomator2-driver
+	# APPIUM_HOME=./android appium driver install uiautomator2
+	# APPIUM_HOME=./android appium => scan appium drivers under APPIUM_HOME
+
+	# 	- appium inspector 
+	echo "Downloading Appium Inspector"
+	download_package "Appium Inspector" ${download_appium_inspector} ./android/Appium-Inspector.exe
+
+	# download Android SDK Platform Tools
+	echo "Downloading Android SDK Platform Tools"
+	download_package "Android SDK Platform Tools" ${download_android_platformtools} ./android/platform-tools_r35.0.0-windows.zip
+	/usr/bin/yes A | unzip ./android/platform-tools_r35.0.0-windows.zip -d ./android/
+}
+
 #
 #  Packaging python for Windows
 #
@@ -288,9 +333,14 @@ function make_pandoc() {
 	fi
 }
 
+function make_android() {
+	packaging_android
+}
+
 function make_all() {
 	make_python
 	make_vscode
+	make_android
 	make_pandoc
 	goodmsg "make_all done"
 }
@@ -315,6 +365,8 @@ elif [[ "$vscode_only" == "Yes" ]]; then
 	make_vscode
 elif [[ "$pandoc_only" == "Yes" ]]; then
 	make_pandoc
+elif [[ "$android_only" == "Yes" ]]; then
+	make_android
 else
 	make_all
 fi

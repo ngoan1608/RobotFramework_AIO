@@ -114,11 +114,11 @@ Source: "..\config\tools\*"; Excludes: ".git,*.pyc"; DestDir: {app}\tools; Flags
 Source: "..\test\aio-analyzer\*"; Excludes: ".git,*.pyc"; DestDir: {app}\tools\aio-analyzer; Flags: ignoreversion recursesubdirs createallsubdirs; Permissions: everyone-full;
 
 ;Android related
-;Source: "..\..\devtools\Windows\Android\*"; Excludes: ".git"; DestDir: {app}\devtools\Windows\Android; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
-;Source: "..\..\devtools\Windows\Appium\*"; Excludes: ".git"; DestDir: {app}\devtools\Windows\Appium; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
-;Source: "..\..\devtools\Windows\nodejs\*"; Excludes: ".git"; DestDir: {app}\devtools\Windows\nodejs; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
+Source: "..\android\platform-tools\*"; Excludes: ".git"; DestDir: {app}\devtools\Android\platform-tools\; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android\platform_tools"
+Source: "..\android\node_modules\*"; Excludes: ".git"; DestDir: {app}\devtools\node_modules; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android\appium_server"
 
 #include '..\include\windows\install_projects.iss';
+#include '..\include\windows\install_android.iss';
 
 [Icons]
 ;
@@ -139,12 +139,16 @@ Name: "{group}\ TestCase Base Folder"; Filename: {code:GetUsrDataDir}\testcases;
 Name: "{group}\ Tutorial Base Folder"; Filename: {code:GetUsrDataDir}\tutorial; WorkingDir: {code:GetUsrDataDir}\tutorial;
 
 [Types]
-Name: Standard; Description: "Standard Installation"; 
+Name: Standard; Description: "Standard Installation"; Flags: iscustom
 Name: Full; Description: "Full installation of all components."; 
 
 [Components]
-Name: "RobotFramework_AIO_All_In_One"; Description: "All in One required to develop and execute RobotFramework test cases"; Flags: fixed; Types: Standard;
-Name: "Android"; Description: "Android Tools required for Android based test cases (Appium-desktop, nodejs and Android platform-tools."; Types: Standard Full;
+Name: "RobotFramework_AIO_All_In_One"; Description: "All in One required to develop and execute RobotFramework test cases"; Flags: fixed; Types: Standard Full;
+Name: "Android"; Description: "Android package for developing test case"; Types: Standard Full;
+Name: "Android\platform_tools"; Description: "Android SDK Platform Tools."; Types: Standard Full;
+Name: "Android\nodejs"; Description: "Node.js environment which is required for appium server."; Types: Full;
+Name: "Android\appium_server"; Description: "Appium server verion 2.x."; Types: Standard Full;
+Name: "Android\appium_inspector"; Description: "Appium Inspector: a GUI assistant tool for Appium."; Types: Full;
 
 [Registry]
 Root: HKCR; SubKey: .robot; ValueType: string; ValueData: RobotFramework.testcase.file; Flags: UninsDeleteKey;
@@ -183,13 +187,16 @@ Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
 ; The idea is that the ROBFW Frameworks sets ANDRDOID_HOME locally for the ROBFW process(es) where ever required to the android sdk delivered with ROBFW Framework
 ; If Android SDK is installed and ANDROID_HOME is existing, then it will be locally overridden, but not globally by ROBFW installation.
 
-;Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: Path; Check:NeedCreateEnvVar('ANDROID_HOME'); ValueData: "{olddata};{app}\devtools\Windows\Android\platform-tools\tools"; Components: "Android"
-;Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: ANDROID_HOME; Check:NeedCreateEnvVar('ANDROID_HOME'); ValueData: {app}\devtools\Windows\Android\platform-tools; Components : "Android"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: Path; Check:NeedCreateEnvVar('ANDROID_HOME'); ValueData: "{olddata};{app}\devtools\Android\platform-tools\tools"; Components: "Android\platform_tools"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: ANDROID_HOME; Check:NeedCreateEnvVar('ANDROID_HOME'); ValueData: {app}\devtools\Android; Components : "Android\platform_tools"
+
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: APPIUM_HOME; Check:NeedCreateEnvVar('APPIUM_HOME'); ValueData: {app}\devtools; Components : "Android\appium_server"
+; Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: Path; Check:NeedCreateEnvVar('ANDROID_HOME'); ValueData: "{olddata};{app}\devtools\Android\node_modules\.bin"; Components: "Android\appium_server"
 
 ;Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotNodeJS; ValueData: {app}\devtools\Windows\nodejs; Components: "Android"
-;Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAndroidPlatformTools; ValueData: {app}\devtools\Windows\Android\platform-tools; Components: "Android"
-;Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAppium; ValueData: {app}\devtools\Windows\Appium; Components: "Android"
-;Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotDevtools; ValueData: {app}\devtools; Components: "Android"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAndroidPlatformTools; ValueData: {app}\devtools\Android\platform-tools; Components: "Android\platform_tools"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAppium; ValueData: {app}\devtools\node_modules\.bin; Components: "Android\appium_server"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotDevtools; ValueData: {app}\devtools; Components: "Android"
 
 ;Switch off "Script need to long for IE": http://support.microsoft.com/kb/175500
 Root: HKCU; SubKey: "Software\Microsoft\Internet Explorer\Styles"; ValueType: dword; ValueName: MaxScriptStatements; ValueData: $FFFFFFFF;
@@ -206,6 +213,7 @@ Name: {code:GetUsrDataDir}\testcases\doc; Flags: UninsNeverUninstall;
 Name: {app}\robotvscode\data; Permissions: users-full; 
 Name: {app}\robotvscode\data\extensions; Permissions: users-full; 
 Name: {app}\robotvscode\data\user-data; Permissions: users-full; 
+Name: {app}\devtools; Permissions: users-full; 
 
 [INI]
 
@@ -217,7 +225,7 @@ Filename: "powershell.exe"; \
 [UninstallRun]
 
 
-[code]
+[Code]
 // Helper type for mapping of Project Index to ListPosition.
 // Name and Index are in a fix relationship. Listposition can be
 // selected free to be free in the order of the displayed list.
@@ -391,32 +399,17 @@ begin
 		end;
 	  except
 	  end;
-             
-      //uninstaller can be 001,002,003... This loop is to hit the proper number
-//      for i:=0 to 9 do
-//       begin
-//          bUninstallerExists := FileExists(ExpandConstant('{app}\unins00'+IntToStr(i)+'.exe'));
-//          if bUninstallerExists=True then
-//            begin
-//              try
-                //in order to avoid uninstall problems due to read only files
-                //remove "R"-attribute
-//                sCmdBuffer:='attrib'
-//                sCmdArgBuffer:=ExpandConstant('-R -A "{app}\AutoTest\*.*"  /D /S')
-//                Exec(sCmdBuffer,sCmdArgBuffer,'',SW_HIDE,ewWaitUntilTerminated,ResultCode);
-//              except
-//              end;
-              
-              //seperate try block, otherwise uninstaller will not be executed
-              //if attrib fails.
-//              try
-                //now call the uninstaller.
-//                sUninstallCommand:=ExpandConstant('{app}\unins00'+IntToStr(i)+'.exe');  
-//                Exec(sUninstallCommand,'/SILENT','',SW_SHOW,ewWaitUntilTerminated,ResultCode);
-//              except
-//              end;
-//            end;
-//       end;  // rof i:=0
+
+    if IsComponentSelected('Android\nodejs') then
+    begin
+      ProcessNodeJSInstallation;
+    end;
+
+    if IsComponentSelected('Android\appium_inspector') then
+    begin
+      InstallAppiumInspector;
+    end
+
     end; // fi CurStep=ssInstall then
     
   //directly after installation this will be executed
@@ -635,7 +628,7 @@ Name: {app}\robotvscode\*; Type: filesandordirs;
 Name: {app}\python39\*; Type: filesandordirs;
 Name: {app}\tools\*; Type: filesandordirs;
 Name: {app}\selftest\*; Type: filesandordirs;
-;Name: {app}\devtools\*; Type: filesandordirs;
+Name: {app}\devtools\*; Type: filesandordirs;
 Name: {code:GetUsrDataDir}\tutorial; Type: filesandordirs;
 Name: {code:GetUsrDataDir}\documentation; Type: filesandordirs;
 Type: files; Name: "{app}\unins00*.*"; Check: ShouldRemoveUninsFiles(ExpandConstant('{app}'))
@@ -645,6 +638,6 @@ Name: {app}\robotvscode\*; Type: filesandordirs;
 Name: {app}\python39\*; Type: filesandordirs;
 Name: {app}\tools\*; Type: filesandordirs;
 Name: {app}\selftest\*; Type: filesandordirs;
-;Name: {app}\devtools\*; Type: filesandordirs;
+Name: {app}\devtools\*; Type: filesandordirs;
 Name: {code:GetUsrDataDir}\documentation; Type: filesandordirs;
 Type: files; Name: "{app}\unins00*.*"; Check: ShouldRemoveUninsFiles(ExpandConstant('{app}'))

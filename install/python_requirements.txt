@@ -94,7 +94,7 @@ QLed
 requests             
 # requests-ntlm  
 Appium-Python-Client
-robotframework-appiumlibrary==1.4.4
+robotframework-appiumlibrary
 robotframework-ftplibrary     
 robotframework-listenerlibrary
 robotframework-mqttlibrary    
