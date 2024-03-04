@@ -193,16 +193,19 @@ function packaging_pandoc_windows() {
 
 function packaging_android() {
 	echo "Packaging Android package"
-
-	if [ "$UNAME" == "Linux" ] ; then
-		echo "Under developing"
-		return 0
-	fi
 	mkdir android
 
-	# download Node.js installer
-	echo "Downloading Node.js"
-	download_package "Node.js" $download_nodejs ./android/node.msi
+	if [ "$UNAME" == "Linux" ] ; then
+		Appium-Inspector=Appium-Inspector.AppImage
+		Platform-tools=platform-tools_r35.0.0-windows.zip
+	else
+		Appium-Inspector=Appium-Inspector.exe
+		Platform-tools=platform-tools_r35.0.0-linux.zip
+
+		# download Node.js installer
+		echo "Downloading Node.js"
+		download_package "Node.js" $download_nodejs ./android/node.msi
+	fi
 
 	# download appium packages:
 	# 	- appium server 
@@ -218,12 +221,12 @@ function packaging_android() {
 
 	# 	- appium inspector 
 	echo "Downloading Appium Inspector"
-	download_package "Appium Inspector" ${download_appium_inspector} ./android/Appium-Inspector.exe
+	download_package "Appium Inspector" ${download_appium_inspector} ./android/${Appium-Inspector}
 
 	# download Android SDK Platform Tools
 	echo "Downloading Android SDK Platform Tools"
-	download_package "Android SDK Platform Tools" ${download_android_platformtools} ./android/platform-tools_r35.0.0-windows.zip
-	/usr/bin/yes A | unzip ./android/platform-tools_r35.0.0-windows.zip -d ./android/
+	download_package "Android SDK Platform Tools" ${download_android_platformtools} ./android/${Platform-tools}
+	/usr/bin/yes A | unzip ./android/${Platform-tools} -d ./android/
 }
 
 #
