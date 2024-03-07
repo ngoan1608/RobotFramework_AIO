@@ -326,8 +326,8 @@ function build_debian()
 	cp -R -a ./test/aio-analyzer ./output_lx/${PACK_NAME}/opt/rfwaio/tools/aio-analyzer
 
 	mkdir -p ./output_lx/${PACK_NAME}/opt/rfwaio/devtools
-	cp -R -a ./devtools/. ./output_lx/${PACK_NAME}/opt/rfwaio/devtools
-	chmod +x ./output_lx/${PACK_NAME}/opt/rfwaio/devtools/*Inspector*
+	cp -R -a ../devtools/. ./output_lx/${PACK_NAME}/opt/rfwaio/devtools
+	chmod +x ./output_lx/${PACK_NAME}/opt/rfwaio/devtools/Appium-Inspector.AppImage
 
 	cp ./config/build/dpkg_build/postinst.sh ./output_lx/${PACK_NAME}/usr/local/bin/initRobotFrameworkAIO.sh
 

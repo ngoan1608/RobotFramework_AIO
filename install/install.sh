@@ -210,7 +210,7 @@ function packaging_android() {
 	download_android_buildtools=https://dl.google.com/android/repository/build-tools_r${build_tool_version}-${os}.zip
 	download_android_platformtools=https://dl.google.com/android/repository/platform-tools_r${build_tool_version}-${os}.zip
 	download_nodejs=https://nodejs.org/dist/v${nodejs_version}/node-v${nodejs_version}-${os_short}-x64.${nodejs_ext}
-	download_appium_inspector=https://github.com/appium/appium-inspector/releases/download/v${appium_inspector_version}/Appium-Inspector-${os}${arch}${appium_inspector_version}${appium_inspector_ext}
+	download_appium_inspector=https://github.com/appium/appium-inspector/releases/download/v${appium_inspector_version}/Appium-Inspector-${os}-${appium_inspector_version}${arch}.${appium_inspector_ext}
 
 	archived_android_tools=android-tools.zip
 	# archived_android_emulator=android-emulator.zip
@@ -246,12 +246,17 @@ function packaging_android() {
 	# APPIUM_HOME=./android appium driver install uiautomator2
 	# APPIUM_HOME=./android appium => scan appium drivers under APPIUM_HOME
 
-	mkdir $destDir/devtools/Android
 	# 	- appium inspector 
 	echo "Downloading Appium Inspector"
 	download_package "Appium Inspector" ${download_appium_inspector} ${sourceDir}/${archived_appium_inspector}
-	/usr/bin/yes A | unzip ${sourceDir}/${archived_appium_inspector} -d $destDir/devtools/Android/Appium-Inspector
+	if [ "$appium_inspector_ext" == "zip" ]; then
+		/usr/bin/yes A | unzip ${sourceDir}/${archived_appium_inspector} -d $destDir/devtools/Appium-Inspector
+	else
+		mv ${sourceDir}/${archived_appium_inspector} $destDir/devtools/Appium-Inspector.${archived_appium_inspector}
+	fi
+	
 
+	mkdir $destDir/devtools/Android
 	# download Android SDK Tools
 	echo "Downloading Android SDK Tools"
 	download_package "Android SDK Tools" ${download_android_tools} ${sourceDir}/${archived_android_tools}
