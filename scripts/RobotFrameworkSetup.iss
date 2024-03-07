@@ -114,8 +114,10 @@ Source: "..\config\tools\*"; Excludes: ".git,*.pyc"; DestDir: {app}\tools; Flags
 Source: "..\test\aio-analyzer\*"; Excludes: ".git,*.pyc"; DestDir: {app}\tools\aio-analyzer; Flags: ignoreversion recursesubdirs createallsubdirs; Permissions: everyone-full;
 
 ;Android related
-Source: "..\android\platform-tools\*"; Excludes: ".git"; DestDir: {app}\devtools\Android\platform-tools\; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android\platform_tools"
-Source: "..\android\node_modules\*"; Excludes: ".git"; DestDir: {app}\devtools\node_modules; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android\appium_server"
+Source: "..\devtools\Android\*"; Excludes: ".git"; DestDir: {app}\devtools\Android; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
+Source: "..\devtools\nodejs\*"; Excludes: ".git"; DestDir: {app}\devtools\nodejs; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
+Source: "..\devtools\Appium-Inspector\*"; Excludes: ".git"; DestDir: {app}\devtools\Appium-Inspector; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
+Source: "..\config\tools\Appium.bat"; Excludes: ".git"; DestDir: {app}\devtools; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
 
 #include '..\include\windows\install_projects.iss';
 #include '..\include\windows\install_android.iss';
@@ -138,6 +140,9 @@ Name: "{group}\ TestCase Base Folder"; Filename: {code:GetUsrDataDir}\testcases;
 
 Name: "{group}\ Tutorial Base Folder"; Filename: {code:GetUsrDataDir}\tutorial; WorkingDir: {code:GetUsrDataDir}\tutorial;
 
+Name: "{group}\(Android) Appium-Inspector"; Filename: {app}\devtools\Appium-Inspector\Appium Inspector.exe; Components: "Android";
+Name: "{group}\(Android) Appium-Server"; Filename: {app}\devtools\Appium.bat; Components: "Android";
+
 [Types]
 Name: Standard; Description: "Standard Installation"; Flags: iscustom
 Name: Full; Description: "Full installation of all components."; 
@@ -145,9 +150,8 @@ Name: Full; Description: "Full installation of all components.";
 [Components]
 Name: "RobotFramework_AIO_All_In_One"; Description: "All in One required to develop and execute RobotFramework test cases"; Flags: fixed; Types: Standard Full;
 Name: "Android"; Description: "Android package for developing test case"; Types: Standard Full;
-Name: "Android\platform_tools"; Description: "Android SDK Platform Tools."; Types: Standard Full;
-Name: "Android\nodejs"; Description: "Node.js environment which is required for appium server."; Types: Full;
-Name: "Android\appium_server"; Description: "Appium server verion 2.x."; Types: Standard Full;
+Name: "Android\sdk_tools"; Description: "Android SDK Tools: command line tools, platform tools, build tools."; Types: Standard Full;
+Name: "Android\nodejs"; Description: "Node.js environment which is also contains appium server."; Types: Full;
 Name: "Android\appium_inspector"; Description: "Appium Inspector: a GUI assistant tool for Appium."; Types: Full;
 
 [Registry]
@@ -187,15 +191,13 @@ Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
 ; The idea is that the ROBFW Frameworks sets ANDRDOID_HOME locally for the ROBFW process(es) where ever required to the android sdk delivered with ROBFW Framework
 ; If Android SDK is installed and ANDROID_HOME is existing, then it will be locally overridden, but not globally by ROBFW installation.
 
-Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: Path; Check:NeedCreateEnvVar('ANDROID_HOME'); ValueData: "{olddata};{app}\devtools\Android\platform-tools\tools"; Components: "Android\platform_tools"
-Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: ANDROID_HOME; Check:NeedCreateEnvVar('ANDROID_HOME'); ValueData: {app}\devtools\Android; Components : "Android\platform_tools"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: Path; Check:NeedCreateEnvVar('ANDROID_HOME'); ValueData: "{olddata};{app}\devtools\Android"; Components: "Android"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: ANDROID_HOME; Check:NeedCreateEnvVar('ANDROID_HOME'); ValueData: {app}\devtools\Android; Components : "Android"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: APPIUM_HOME; Check:NeedCreateEnvVar('APPIUM_HOME'); ValueData: {app}\devtools\nodejs; Components : "Android"
 
-Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: APPIUM_HOME; Check:NeedCreateEnvVar('APPIUM_HOME'); ValueData: {app}\devtools; Components : "Android\appium_server"
-; Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: Path; Check:NeedCreateEnvVar('ANDROID_HOME'); ValueData: "{olddata};{app}\devtools\Android\node_modules\.bin"; Components: "Android\appium_server"
-
-;Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotNodeJS; ValueData: {app}\devtools\Windows\nodejs; Components: "Android"
-Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAndroidPlatformTools; ValueData: {app}\devtools\Android\platform-tools; Components: "Android\platform_tools"
-Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAppium; ValueData: {app}\devtools\node_modules\.bin; Components: "Android\appium_server"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotNodeJS; ValueData: {app}\devtools\nodejs; Components: "Android"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAndroidPlatformTools; ValueData: {app}\devtools\Android\platform-tools; Components: "Android"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAppium; ValueData: {app}\devtools\nodejs\node_modules\.bin; Components: "Android"
 Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotDevtools; ValueData: {app}\devtools; Components: "Android"
 
 ;Switch off "Script need to long for IE": http://support.microsoft.com/kb/175500
@@ -400,15 +402,15 @@ begin
 	  except
 	  end;
 
-    if IsComponentSelected('Android\nodejs') then
-    begin
-      ProcessNodeJSInstallation;
-    end;
-
-    if IsComponentSelected('Android\appium_inspector') then
-    begin
-      InstallAppiumInspector;
-    end
+    // if IsComponentSelected('Android\nodejs') then
+    // begin
+    //   ProcessNodeJSInstallation;
+    // end;
+// 
+    // if IsComponentSelected('Android\appium_inspector') then
+    // begin
+    //   InstallAppiumInspector;
+    // end
 
     end; // fi CurStep=ssInstall then
     

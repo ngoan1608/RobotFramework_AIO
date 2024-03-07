@@ -307,7 +307,9 @@ function build_debian()
 	chmod 755 ./output_lx/${PACK_NAME}/DEBIAN/prerm
 	cp ./config/build/dpkg_build/robot.ico ./output_lx/${PACK_NAME}/opt/rfwaio/linux/icon
 	cp ./config/build/dpkg_build/codium.png ./output_lx/${PACK_NAME}/opt/rfwaio/linux/icon
+	cp ./config/build/dpkg_build/appium.png ./output_lx/${PACK_NAME}/opt/rfwaio/linux/icon
 	cp ./config/build/dpkg_build/robot.desktop ./output_lx/${PACK_NAME}/opt/rfwaio/linux/
+	cp ./config/build/dpkg_build/appium.desktop ./output_lx/${PACK_NAME}/opt/rfwaio/linux/
 	cp ./config/build/dpkg_build/set_robotenv.sh ./output_lx/${PACK_NAME}/opt/rfwaio/linux/
 	#cp ./config/build/dpkg_build/install_dlt.sh ./output_lx/${PACK_NAME}/opt/rfwaio/linux/
 	cp ./config/build/dpkg_build/robot ./output_lx/${PACK_NAME}/usr/local/bin
@@ -324,8 +326,8 @@ function build_debian()
 	cp -R -a ./test/aio-analyzer ./output_lx/${PACK_NAME}/opt/rfwaio/tools/aio-analyzer
 
 	mkdir -p ./output_lx/${PACK_NAME}/opt/rfwaio/devtools
-	cp -R -a ./android/. ./output_lx/${PACK_NAME}/opt/rfwaio/devtools
-	chmod +x ./output_lx/${PACK_NAME}/opt/rfwaio/devtools/Appium-Inspector.AppImage
+	cp -R -a ./devtools/. ./output_lx/${PACK_NAME}/opt/rfwaio/devtools
+	chmod +x ./output_lx/${PACK_NAME}/opt/rfwaio/devtools/*Inspector*
 
 	cp ./config/build/dpkg_build/postinst.sh ./output_lx/${PACK_NAME}/usr/local/bin/initRobotFrameworkAIO.sh
 
