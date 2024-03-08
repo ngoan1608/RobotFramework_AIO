@@ -229,20 +229,22 @@ function packaging_android() {
 	if [ "$nodejs_ext" == "zip" ]; then
 		/usr/bin/yes A | unzip ${sourceDir}/${archived_nodejs} -d $destDir/devtools
 		mv $destDir/devtools/node-* $destDir/devtools/nodejs
+		npm_bin=$destDir/devtools/nodejs/npm
 	else
+	   mkdir $destDir/devtools/nodejs
 		tar -xf ${sourceDir}/${archived_nodejs} -C $destDir/devtools/nodejs --strip-components=1
+		npm_bin=$destDir/devtools/nodejs/bin/npm
 	fi
-
 
 	# download appium packages:
 	# 	- appium server 
 	echo "Installing appium server"
-	$destDir/devtools/nodejs/npm install --prefix $destDir/devtools/nodejs appium 
+	$npm_bin install --prefix $destDir/devtools/nodejs appium 
 
 	#  - UIAutomator2 driver for appium
 	echo "Installing UIAutomator2 driver for appium"
 	export APPIUM_SKIP_CHROMEDRIVER_INSTALL=1
-	$destDir/devtools/nodejs/npm install --prefix $destDir/devtools/nodejs appium-uiautomator2-driver
+	$npm_bin install --prefix $destDir/devtools/nodejs appium-uiautomator2-driver
 	# APPIUM_HOME=./android appium driver install uiautomator2
 	# APPIUM_HOME=./android appium => scan appium drivers under APPIUM_HOME
 
@@ -252,7 +254,7 @@ function packaging_android() {
 	if [ "$appium_inspector_ext" == "zip" ]; then
 		/usr/bin/yes A | unzip ${sourceDir}/${archived_appium_inspector} -d $destDir/devtools/Appium-Inspector
 	else
-		mv ${sourceDir}/${archived_appium_inspector} $destDir/devtools/Appium-Inspector.${archived_appium_inspector}
+		mv ${sourceDir}/${archived_appium_inspector} $destDir/devtools/Appium-Inspector.${appium_inspector_ext}
 	fi
 	
 

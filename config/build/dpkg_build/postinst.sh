@@ -130,7 +130,16 @@ fi
 ############################################################################### 
 echo -e "${MSG_DONE} Creating/Updating Unity Launchers" 
 cp /opt/rfwaio/linux/robot.desktop ${HOME}/.local/share/applications
-chown -R "${CURRENT_USER}:${sGROUP}" /home/${CURRENT_USER}/.local/share/applications/robot.desktop
+chown -R "${CURRENT_USER}:${sGROUP}" ${HOME}/.local/share/applications/robot.desktop
+chmod +x ${HOME}/.local/share/applications/robot.desktop
+
+cp /opt/rfwaio/linux/appium.desktop ${HOME}/.local/share/applications
+chown -R "${CURRENT_USER}:${sGROUP}" ${HOME}/.local/share/applications/appium.desktop
+chmod +x ${HOME}/.local/share/applications/appium.desktop
+
+cp /opt/rfwaio/linux/appiumInspector.desktop ${HOME}/.local/share/applications
+chown -R "${CURRENT_USER}:${sGROUP}" ${HOME}/.local/share/applications/appiumInspector.desktop
+chmod +x ${HOME}/.local/share/applications/appiumInspector.desktop
 
 #
 # configure login/non login shells

@@ -11,9 +11,9 @@ export RobotLogPath=~/RobotTest/logfiles
 export RobotTutorialPath=~/RobotTest/tutorial
 export GENDOC_PLANTUML_PATH=$RobotVsCode/data/extensions/jebbs.plantuml-2.17.5
 export RobotDevtools=/opt/rfwaio/devtools
-export RobotNodeJS=/opt/rfwaio/devtools/nodejs
+export RobotNodeJS=/opt/rfwaio/devtools/nodejs/bin
 export RobotAppium=/opt/rfwaio/devtools/nodejs/node_modules/.bin
-export RobotAndroidPlatformTools=/opt/rfwaio/devtools/Android/platform_tools
+export RobotAndroidPlatformTools=/opt/rfwaio/devtools/Android/platform-tools
 
 
 # Check if JAVA_HOME is already set

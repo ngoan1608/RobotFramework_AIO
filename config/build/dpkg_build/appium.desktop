@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment=Start Appium Server
 Terminal=true
-Name=Appium
-Exec=gnome-terminal -- bash -c '/opt/rfwaio/devtools/nodejs/node_modules/.bin/appium"
+Name=Appium Server
+Exec=bash -c 'export ANDROID_HOME=/opt/rfwaio/devtools/Android; /opt/rfwaio/devtools/nodejs/node_modules/.bin/appium'
 Type=Application
 Icon=/opt/rfwaio/linux/icon/appium.png
