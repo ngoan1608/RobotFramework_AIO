@@ -237,12 +237,12 @@ function packaging_android() {
 	# download appium packages:
 	# 	- appium server 
 	echo "Installing appium server"
-	$destDir/devtools/nodejs/npm install appium
+	$destDir/devtools/nodejs/npm install --prefix $destDir/devtools/nodejs appium 
 
 	#  - UIAutomator2 driver for appium
 	echo "Installing UIAutomator2 driver for appium"
 	export APPIUM_SKIP_CHROMEDRIVER_INSTALL=1
-	$destDir/devtools/nodejs/npm install appium-uiautomator2-driver
+	$destDir/devtools/nodejs/npm install --prefix $destDir/devtools/nodejs appium-uiautomator2-driver
 	# APPIUM_HOME=./android appium driver install uiautomator2
 	# APPIUM_HOME=./android appium => scan appium drivers under APPIUM_HOME
 
