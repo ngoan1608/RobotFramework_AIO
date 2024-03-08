@@ -140,8 +140,8 @@ Name: "{group}\ TestCase Base Folder"; Filename: {code:GetUsrDataDir}\testcases;
 
 Name: "{group}\ Tutorial Base Folder"; Filename: {code:GetUsrDataDir}\tutorial; WorkingDir: {code:GetUsrDataDir}\tutorial;
 
-Name: "{group}\(Android) Appium-Inspector"; Filename: {app}\devtools\Appium-Inspector\Appium Inspector.exe; Components: "Android";
-Name: "{group}\(Android) Appium-Server"; Filename: {app}\devtools\Appium.bat; Components: "Android";
+Name: "{group}\(Android) Appium Inspector"; Filename: {app}\devtools\Appium-Inspector\Appium Inspector.exe; Components: "Android";
+Name: "{group}\(Android) Appium Server"; Filename: {app}\devtools\Appium.bat; Components: "Android";
 
 [Types]
 Name: Standard; Description: "Standard Installation"; Flags: iscustom
