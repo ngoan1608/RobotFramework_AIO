@@ -45,6 +45,10 @@ MSG_ERR="${COL_RED}[ERR]${COL_RESET} "
 chown -R "${CURRENT_USER}:${sGROUP}" /opt/rfwaio/robotvscode/data
 chmod -R 0775 /opt/rfwaio/robotvscode/data
 echo -e "${MSG_DONE} Updated permission for /opt/rfwaio/robotvscode/data"
+
+chown -R "${CURRENT_USER}:${sGROUP}" /opt/rfwaio/devtools/nodejs/lib
+chmod -R 0775 /opt/rfwaio/devtools/nodejs/lib
+echo -e "${MSG_DONE} Updated permission for /opt/rfwaio/devtools/nodejs/lib"
    
 if [ ! -d "${HOME}/RobotTest" ]; then
    

@@ -117,7 +117,7 @@ Source: "..\test\aio-analyzer\*"; Excludes: ".git,*.pyc"; DestDir: {app}\tools\a
 Source: "..\..\devtools\Android\*"; Excludes: ".git"; DestDir: {app}\devtools\Android; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
 Source: "..\..\devtools\nodejs\*"; Excludes: ".git"; DestDir: {app}\devtools\nodejs; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
 Source: "..\..\devtools\Appium-Inspector\*"; Excludes: ".git"; DestDir: {app}\devtools\Appium-Inspector; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
-Source: "..\config\tools\Appium.bat"; Excludes: ".git"; DestDir: {app}\devtools; Flags: ignoreversion recursesubdirs createallsubdirs onlyifdoesntexist uninsneveruninstall; Permissions: users-full; Components: "Android"
+Source: "..\config\tools\Appium.bat"; Excludes: ".git"; DestDir: {app}\devtools; Flags: ignoreversion uninsneveruninstall; Permissions: users-full; Components: "Android"
 
 #include '..\include\windows\install_projects.iss';
 #include '..\include\windows\install_android.iss';
