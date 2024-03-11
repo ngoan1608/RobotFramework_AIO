@@ -197,7 +197,7 @@ Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
 
 Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotNodeJS; ValueData: {app}\devtools\nodejs; Components: "Android"
 Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAndroidPlatformTools; ValueData: {app}\devtools\Android\platform-tools; Components: "Android"
-Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAppium; ValueData: {app}\devtools\nodejs\node_modules\.bin; Components: "Android"
+Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotAppium; ValueData: {app}\devtools\nodejs; Components: "Android"
 Root: HKLM; SubKey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: RobotDevtools; ValueData: {app}\devtools; Components: "Android"
 
 ;Switch off "Script need to long for IE": http://support.microsoft.com/kb/175500
