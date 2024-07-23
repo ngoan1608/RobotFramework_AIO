@@ -320,14 +320,6 @@ jobs:
     - name: Download artifact from build workflow
       uses: actions/download-artifact@v3
 
-    - name: Get released file names
-      run: |
-        echo "EXE_FILE=$(ls windows-package/*.exe | head -1)" >> $GITHUB_ENV
-        echo "DEB_FILE=$(ls linux-package/*.deb | head -1)" >> $GITHUB_ENV
-        echo "RELEASE_INFO_FILE=$(ls windows-aiotestlogfiles/release_info_RobotFramework_AIO_${TAG_NAME#rel/aio/}.html)" >> $GITHUB_ENV
-        echo "RELEASE_VERSION=${TAG_NAME#rel/aio/}" >> $GITHUB_ENV
-
-
     - name: Create/Update GitHub Release
       id: create_update_release
       uses: ncipollo/release-action@v1
@@ -335,7 +327,7 @@ jobs:
         allowUpdates: true
         omitNameDuringUpdate: true
         makeLatest: true
-        name: RobotFramework AIO version ${{ env.RELEASE_VERSION }}
+        name: RobotFramework AIO version ${TAG_NAME#rel/aio/}
         artifacts: "windows-package/*.exe,linux-package/*.deb,windows-aiotestlogfiles/release_info_RobotFramework_AIO_*.html"
         bodyFile: "windows-aiotestlogfiles/release_changelog.html"
 
