@@ -2,7 +2,7 @@
 #
 # Test Trigger configuration file
 #
-# OSS standard version (without robotframework/atest)
+# OSS version without testing for changes in robotframework repo
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -160,15 +160,6 @@
                        "TESTEXECUTOR"      : "executerobottest.py",
                        "LOCALCOMMANDLINE"  : ["--exclude atestExcluded"],
                        "LOGFILE"           : "../../../../robotframework-testsuitesmanagement/atest/aiotestlogfiles/aiotestlogfile.xml"
-                    },
-                    {
-                       "COMPONENTROOTPATH" : "../../../../robotframework",
-                       "TESTFOLDER"        : "atest",
-                       "TESTTYPE"          : "ROBOT",
-                       "TESTEXECUTOR"      : "run.py",
-                       "LOCALCOMMANDLINE"  : ["-d \"./atest/aiotestlogfiles\"", "-b aiotestlogfile.log", "-o aiotestlogfile.xml", "\"./atest/robot/log_level\""],
-                       "LOGFILE"           : "../../../../robotframework/atest/aiotestlogfiles/aiotestlogfile.xml",
-                       "EXECUTION"         : "RAW"
                     }
                   ],
 

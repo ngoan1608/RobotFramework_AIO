@@ -32,6 +32,10 @@ env:
   INSTALLER_LOCATION: "https://github.com/test-fullautomation/RobotFramework_AIO/releases"
   GITHUB_COPILOT_REF_URL: "https://docs.github.com/en/enterprise-cloud@latest/copilot/managing-copilot/managing-copilot-as-an-individual-subscriber/managing-your-copilot-subscription"
   GITHUB_COPILOT_EXT_ARG: ""
+  REPO_CONFIG: "./config/repositories/repositories.conf"
+  TEST_CONFIG: "./config/testtrigger_config.json"
+  REPO_CONFIG_NO_RBFW: "./config/repositories/repositories_no_robotframework.conf"
+  TEST_CONFIG_NO_RBFW: "./config/testtrigger_config_no_robotframework.json"
 
 jobs:
   tag-repos:
@@ -72,11 +76,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - type: robotframework-develop_6.1
-            REPO_CONFIG: "./config/repositories/repositories.conf"
-          - type: unchanged-robotframework
-            REPO_CONFIG: "./config/repositories/repositories_no_robotframework.conf"
+        version: [basic, custom]
     name: Build Linux packages
     runs-on: ubuntu-latest
     needs: [ tag-repos , trigger-aio ]
@@ -103,10 +103,14 @@ jobs:
           # Update placeholders install-github-copilot-exts.sh script
           sed -i "s|\$PLACEHOLDER_REF_URL|${GITHUB_COPILOT_REF_URL}|g" ./install/install-github-copilot-exts.sh
 
+          if [[ ${{ matrix.version }} == "basic" ]];then
+            echo "REPO_CONFIG=${REPO_CONFIG_NO_RBFW}" >> $GITHUB_ENV
+          fi
+
       - name: Clone repositories
         run: |
           chmod +x ./cloneall
-          ./cloneall --config-file='${{ matrix.REPO_CONFIG }}'
+          ./cloneall --config-file=${REPO_CONFIG}
 
       - name: Install
         run: |
@@ -116,7 +120,7 @@ jobs:
       - name: Build
         run: |
           chmod +x ./build
-          ./build --config-file='${{ matrix.REPO_CONFIG }}'
+          ./build --config-file=${REPO_CONFIG}
 
       - name: Update all documents
         if: ${{ github.ref_type == 'tag' && matrix.type == 'robotframework-develop_6.1' }}
@@ -148,24 +152,20 @@ jobs:
       - name: Upload built package
         uses: actions/upload-artifact@v3
         with:
-          name: linux-package-${{ matrix.type }}
+          name: linux-package-${{ matrix.version }}
           path: output_lx/*.deb
 
       - name: Upload documentation
         uses: actions/upload-artifact@v3
         with:
-          name: RobotFrameworkAIO_Reference-${{ matrix.type }}
+          name: RobotFrameworkAIO_Reference-${{ matrix.version }}
           path: ${{ runner.workspace }}/robotframework-documentation/RobotFrameworkAIO/RobotFrameworkAIO_Reference.pdf
 
   build-windows:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - type: robotframework-develop_6.1
-            REPO_CONFIG: "./config/repositories/repositories.conf"
-          - type: unchanged-robotframework
-            REPO_CONFIG: "./config/repositories/repositories_no_robotframework.conf"
+        version: [basic, custom]
     name: Build Windows package
     runs-on: windows-latest
     needs: [ tag-repos , trigger-aio ]
@@ -192,11 +192,15 @@ jobs:
           # Update placeholders install-github-copilot-exts.sh script
           sed -i "s|\$PLACEHOLDER_REF_URL|${GITHUB_COPILOT_REF_URL}|g" ./install/install-github-copilot-exts.sh
 
+          if [[ ${{ matrix.version }} == "basic" ]];then
+            echo "REPO_CONFIG=${REPO_CONFIG_NO_RBFW}" >> $GITHUB_ENV
+          fi
+
       - name: Clone repositories
         shell: bash
         run: |
           chmod +x ./cloneall
-          ./cloneall --config-file='${{ matrix.REPO_CONFIG }}'
+          ./cloneall --config-file=${REPO_CONFIG}
 
       - name: Install
         shell: bash
@@ -204,25 +208,19 @@ jobs:
 
       - name: Build
         shell: bash
-        run: ./build --config-file='${{ matrix.REPO_CONFIG }}'
+        run: ./build --config-file=${REPO_CONFIG}
 
       - name: Upload built package
         uses: actions/upload-artifact@v3
         with:
-          name: windows-package-${{ matrix.type }}
+          name: windows-package-${{ matrix.version }}
           path: Output/
 
   install-test-windows:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - type: robotframework-develop_6.1
-            REPO_CONFIG: "./config/repositories/repositories.conf"
-            TEST_CONFIG: "./test/aio-test-trigger/config/testtrigger_config.json"
-          - type: unchanged-robotframework
-            REPO_CONFIG: "./config/repositories/repositories_no_robotframework.conf"
-            TEST_CONFIG: "./test/aio-test-trigger/config/testtrigger_config_no_robotframework.json"
+        version: [basic, custom]
     name: Test Windows package
     runs-on: windows-latest
     needs: [ build-windows  , trigger-aio ]
@@ -243,15 +241,18 @@ jobs:
     - name: Clone repositories
       shell: bash
       run: |
+        if [[ ${{ matrix.version }} == "basic" ]];then
+          export REPO_CONFIG=${REPO_CONFIG_NO_RBFW}
+        fi
         export REPOSITORY="${{needs.trigger-aio.outputs.repository}}"
         export PULL_REQUEST_BRANCH="${{needs.trigger-aio.outputs.branch}}"
         chmod +x ./cloneall
-        ./cloneall --config-file='${{ matrix.REPO_CONFIG }}'
+        ./cloneall --config-file=${REPO_CONFIG}
 
     - name: Download Windows installer package
       uses: actions/download-artifact@v3
       with:
-        name: windows-package-${{ matrix.type }}
+        name: windows-package-${{ matrix.version }}
 
     - name: Install RobotFramework AIO on Windows
       shell: cmd
@@ -260,7 +261,10 @@ jobs:
     - name: Run tests on Windows
       shell: bash
       run: |
-        "$RobotPythonPath/python" test/aio-test-trigger/aio-test-trigger.py --configfile ${{ matrix.TEST_CONFIG }} 2>&1 | tee console_log.txt
+        if [[ ${{ matrix.version }} == "basic" ]];then
+          export TEST_CONFIG=${TEST_CONFIG_NO_RBFW}
+        fi
+        "$RobotPythonPath/python" test/aio-test-trigger/aio-test-trigger.py --configfile ${TEST_CONFIG} 2>&1 | tee console_log.txt
         # Get system error code from python program
         exit_code=${PIPESTATUS[0]}
         if [ $exit_code -ne 0 ]; then
@@ -290,7 +294,7 @@ jobs:
       if: success() || failure()
       uses: actions/upload-artifact@v3
       with:
-        name: windows-aiotestlogfiles
+        name: windows-aiotestlogfiles-${{ matrix.version }}
         # long path issue on Windows when upload artifact 
         # https://github.com/actions/upload-artifact/issues/240
         path: |
@@ -311,13 +315,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - type: robotframework-develop_6.1
-            REPO_CONFIG: "./config/repositories/repositories.conf"
-            TEST_CONFIG: "./test/aio-test-trigger/config/testtrigger_config.json"
-          - type: unchanged-robotframework
-            REPO_CONFIG: "./config/repositories/repositories_no_robotframework.conf"
-            TEST_CONFIG: "./test/aio-test-trigger/config/testtrigger_config_no_robotframework.json"
+        version: [basic, custom]
     name: Test Linux package
     runs-on: ubuntu-latest
     needs: [ build-linux , trigger-aio ]
@@ -329,15 +327,18 @@ jobs:
 
     - name: Clone repositories
       run: |
+        if [[ ${{ matrix.version }} == "basic" ]];then
+          export REPO_CONFIG=${REPO_CONFIG_NO_RBFW}
+        fi
         export REPOSITORY="${{needs.trigger-aio.outputs.repository}}"
         export PULL_REQUEST_BRANCH="${{needs.trigger-aio.outputs.branch}}"
         chmod +x ./cloneall
-        ./cloneall --config-file='${{ matrix.REPO_CONFIG }}'
+        ./cloneall --config-file=${REPO_CONFIG}
 
     - name: Download Linux installer package
       uses: actions/download-artifact@v3
       with:
-        name: linux-package-${{ matrix.type }}
+        name: linux-package-${{ matrix.version }}
 
     - name: Install on Linux
       run: |
@@ -346,8 +347,11 @@ jobs:
 
     - name: Run tests on Linux
       run: |
+        if [[ ${{ matrix.version }} == "basic" ]];then
+          export TEST_CONFIG=${TEST_CONFIG_NO_RBFW}
+        fi
         . /opt/rfwaio/linux/set_robotenv.sh
-        $RobotPythonPath/python3.9 test/aio-test-trigger/aio-test-trigger.py --configfile ${{ matrix.TEST_CONFIG }} 2>&1 | tee console_log.txt
+        $RobotPythonPath/python3.9 test/aio-test-trigger/aio-test-trigger.py --configfile ${TEST_CONFIG} 2>&1 | tee console_log.txt
         # Get system error code from python program
         exit_code=${PIPESTATUS[0]}
         if [ $exit_code -ne 0 ]; then
@@ -376,7 +380,7 @@ jobs:
       if: success() || failure()
       uses: actions/upload-artifact@v3
       with:
-        name: linux-aiotestlogfiles
+        name: linux-aiotestlogfiles-${{ matrix.version }}
         path: |
           ${{ runner.workspace }}/**/*/aiotestlogfiles/*
           ${{ runner.workspace }}/**/*/testlogfiles/*
@@ -396,7 +400,7 @@ jobs:
     - name: Download artifact from build workflow
       uses: actions/download-artifact@v3
 
-    - name: Get released version
+    - name: Get released version and rename artifacts properly
       run: |
         echo "RELEASE_VERSION=${TAG_NAME#rel/aio/}" >> $GITHUB_ENV
 
