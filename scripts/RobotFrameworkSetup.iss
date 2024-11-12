@@ -555,7 +555,7 @@ begin
   InstructionLabel.Width := InfoAfterPage.SurfaceWidth;
 
   // Create the memo for the Instruction
-  ScriptPath := WizardDirValue + '\robotvscode\install-github-copilot-exts.sh';
+  ScriptPath := WizardDirValue + '\robotvscode\install-github-copilot-exts.ps1';
   MsgInstallCopilotArgs := ExpandConstant('{cm:InstallCopilotArgs}');
   InstructionMemo := TMemo.Create(WizardForm);
   InstructionMemo.Parent := InfoAfterPage.Surface;
@@ -567,9 +567,9 @@ begin
   InstructionMemo.ReadOnly := True;
   InstructionMemo.ScrollBars := ssVertical;
   InstructionMemo.Cursor := crArrow;
-  InstructionMemo.Text := '1. Open Git Bash or any other bash-compatible terminal.'#13#10#13#10+
-                          '2. Run the following bash script to install GitHub Copilot extension:'#13#10+
-                          '    "'+ ScriptPath + '" ' + MsgInstallCopilotArgs
+  InstructionMemo.Text := '1. Open Windows PowerShell.'#13#10#13#10+
+                          '2. Run the following script to install GitHub Copilot extension:'#13#10+
+                          '    & "'+ ScriptPath + '" ' + MsgInstallCopilotArgs
 
 end;
 
