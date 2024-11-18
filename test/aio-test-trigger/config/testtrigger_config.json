@@ -166,19 +166,10 @@
                        "TESTFOLDER"        : "atest",
                        "TESTTYPE"          : "ROBOT",
                        "TESTEXECUTOR"      : "run.py",
-                       "LOCALCOMMANDLINE"  : ["-d \"./atest/aiotestlogfiles\"", "-b aiotestlogfile.log", "-o aiotestlogfile.xml", "\"./atest/robot/log_level\""],
+                       "LOCALCOMMANDLINE"  : ["-d \"./atest/aiotestlogfiles\"", "-b aiotestlogfile.log", "-o aiotestlogfile.xml", "\"./atest/robot/log_level\"", "\"./atest/testdata/running/thread\""],
                        "LOGFILE"           : "../../../../robotframework/atest/aiotestlogfiles/aiotestlogfile.xml",
                        "EXECUTION"         : "RAW"
-                    },
-                    {
-                     "COMPONENTROOTPATH" : "../../../../robotframework",
-                     "TESTFOLDER"        : "atest",
-                     "TESTTYPE"          : "ROBOT",
-                     "TESTEXECUTOR"      : "run.py",
-                     "LOCALCOMMANDLINE"  : ["-d \"./atest/aiotestlogfiles\"", "-b aiotestlogfile.log", "-o aiotestlogfile.xml", "\"./atest/testdata/running/thread\""],
-                     "LOGFILE"           : "../../../../robotframework/atest/aiotestlogfiles/aiotestlogfile.xml",
-                     "EXECUTION"         : "RAW"
-                     }
+                    }
                   ],
 
 
