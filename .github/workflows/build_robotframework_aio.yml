@@ -101,6 +101,7 @@ jobs:
           echo "PULL_REQUEST_BRANCH=${{needs.trigger-aio.outputs.branch}}" >> $GITHUB_ENV
           echo "AIO_NAME=${AIO_NAME} (${{ matrix.version }})" >> $GITHUB_ENV
           echo "BUNDLE_NAME=--bundle_name \"${AIO_NAME}\"" >> $GITHUB_ENV
+          echo "MAINDOC_CONFIGFILE=--configfile "./maindoc/maindoc_configs/maindoc_config_OSS_${{ matrix.version }}.json" >> $GITHUB_ENV
           
           # Update placeholders install-github-copilot-exts.sh script
           sed -i "s|\$PLACEHOLDER_REF_URL|${GITHUB_COPILOT_REF_URL}|g" ./install/install-github-copilot-exts.sh
@@ -161,8 +162,8 @@ jobs:
       - name: Upload documentation
         uses: actions/upload-artifact@v3
         with:
-          name: RobotFrameworkAIO_Reference-${{ matrix.version }}
-          path: ${{ runner.workspace }}/robotframework-documentation/RobotFrameworkAIO/RobotFrameworkAIO_Reference.pdf
+          name: RobotFrameworkAIO_Reference_${{ matrix.version }}
+          path: ${{ runner.workspace }}/robotframework-documentation/RobotFrameworkAIO/RobotFrameworkAIO_Reference_${{ matrix.version }}.pdf
 
   build-windows:
     strategy:
@@ -193,6 +194,7 @@ jobs:
           echo "PULL_REQUEST_BRANCH=${{needs.trigger-aio.outputs.branch}}" >> $GITHUB_ENV
           echo "AIO_NAME=${AIO_NAME} (${{ matrix.version }})" >> $GITHUB_ENV
           echo "BUNDLE_NAME=--bundle_name \"${AIO_NAME}\"" >> $GITHUB_ENV
+          echo "MAINDOC_CONFIGFILE=--configfile "./maindoc/maindoc_configs/maindoc_config_OSS_${{ matrix.version }}.json" >> $GITHUB_ENV
 
           # Update placeholders install-github-copilot-exts.sh script
           sed -i "s|\$PLACEHOLDER_REF_URL|${GITHUB_COPILOT_REF_URL}|g" ./install/install-github-copilot-exts.ps1
@@ -417,7 +419,7 @@ jobs:
         omitNameDuringUpdate: true
         prerelease: true
         name: RobotFramework AIO version ${{ env.RELEASE_VERSION }}
-        artifacts: "windows-package-original/*.exe,windows-package-extended/*.exe,linux-package-original/*.deb,linux-package-extended/*.deb,windows-aiotestlogfiles-extended/release_info_RobotFramework_AIO_*.html,windows-aiotestlogfiles-original/release_info_RobotFramework_AIO_*.html,RobotFrameworkAIO_Reference-extended/*.pdf"
+        artifacts: "windows-package-original/*.exe,windows-package-extended/*.exe,linux-package-original/*.deb,linux-package-extended/*.deb,windows-aiotestlogfiles-extended/release_info_RobotFramework_AIO_*.html,windows-aiotestlogfiles-original/release_info_RobotFramework_AIO_*.html,RobotFrameworkAIO_Reference_extended/*.pdf,RobotFrameworkAIO_Reference_original/*.pdf"
         bodyFile: "windows-aiotestlogfiles-extended/release_changelog.html"
 
   tag-to-publish-packges-to-pypi:
