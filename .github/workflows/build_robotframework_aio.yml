@@ -394,6 +394,12 @@ jobs:
     - name: Get released version
       run: |
         echo "RELEASE_VERSION=${TAG_NAME#rel/aio/}" >> $GITHUB_ENV
+        mv windows-package-original/*.exe windows-package-original/setup_OSS_RobotFramework_AIO_Win_${TAG_NAME#rel/aio/}_original.exe
+        mv windows-package-extended/*.exe windows-package-extended/setup_OSS_RobotFramework_AIO_Win_${TAG_NAME#rel/aio/}_extended.exe
+        mv linux-package-original/*.deb linux-package-original/setup_OSS_RobotFramework_AIO_Linux_${TAG_NAME#rel/aio/}_original.deb
+        mv linux-package-extended/*.deb linux-package-extended/setup_OSS_RobotFramework_AIO_Linux_${TAG_NAME#rel/aio/}_extended.deb
+        mv windows-aiotestlogfiles-extended/release_info_RobotFramework_AIO_*.html windows-aiotestlogfiles-extended/release_info_OSS_RobotFramework_AIO_${TAG_NAME#rel/aio/}_extended.html
+        mv windows-aiotestlogfiles-original/release_info_RobotFramework_AIO_*.html windows-aiotestlogfiles-original/release_info_OSS_RobotFramework_AIO_${TAG_NAME#rel/aio/}_original.html
 
     - name: Create/Update GitHub Release
       id: create_update_release
