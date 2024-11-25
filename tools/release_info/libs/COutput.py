@@ -108,6 +108,8 @@ class COutput():
       bundle_version_date      = PACKAGE_CONTEXT['bundle_version_date']
       sReleaseInfoFileHTMLName = f"release_info_{bundle_name}_{bundle_version}.html"
       sReleaseInfoFileHTMLName = sReleaseInfoFileHTMLName.replace(" ", "_")
+      sReleaseInfoFileHTMLName = sReleaseInfoFileHTMLName.replace("(", "")
+      sReleaseInfoFileHTMLName = sReleaseInfoFileHTMLName.replace(")", "")
       sReleaseInfoFileHTML     = f"{REFERENCEPATH_CONFIG}/{sReleaseInfoFileHTMLName}"
       sReleaseChangelogFileHTML= f"{REFERENCEPATH_CONFIG}/release_changelog.html"
 
