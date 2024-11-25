@@ -247,7 +247,7 @@ jobs:
         ./cloneall --config-file=${REPO_CONFIG}
 
     - name: Download Windows installer package
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: windows-package-${{ matrix.version }}
 
@@ -330,7 +330,7 @@ jobs:
         ./cloneall --config-file=${REPO_CONFIG}
 
     - name: Download Linux installer package
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: linux-package-${{ matrix.version }}
 
@@ -389,7 +389,7 @@ jobs:
 
     steps:
     - name: Download artifact from build workflow
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
 
     - name: Get released version
       run: |
