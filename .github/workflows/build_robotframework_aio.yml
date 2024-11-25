@@ -78,7 +78,7 @@ jobs:
       MAINDOC_CONFIGFILE: --configfile "./maindoc/maindoc_configs/maindoc_config_OSS_${{ matrix.version }}.json"
       REPO_CONFIG: "./config/repositories/repositories_${{ matrix.version }}.conf"
       AIO_NAME: "RobotFramework AIO (${{ matrix.version }})"
-      BUNDLE_NAME: --bundle_name "RobotFramework AIO (${{ matrix.version }})"
+      BUNDLE_NAME: --bundle_name "RobotFramework AIO"
 
     steps:
       - name: Checkout source
@@ -170,7 +170,7 @@ jobs:
       MAINDOC_CONFIGFILE: --configfile "./maindoc/maindoc_configs/maindoc_config_OSS_${{ matrix.version }}.json"
       REPO_CONFIG: "./config/repositories/repositories_${{ matrix.version }}.conf"
       AIO_NAME: "RobotFramework AIO (${{ matrix.version }})"
-      BUNDLE_NAME: --bundle_name "RobotFramework AIO (${{ matrix.version }})"
+      BUNDLE_NAME: --bundle_name "RobotFramework AIO"
 
     steps:
       - name: Support long path in git
