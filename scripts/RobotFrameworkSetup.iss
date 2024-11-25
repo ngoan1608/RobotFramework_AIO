@@ -445,7 +445,7 @@ begin
   //directly after installation this will be executed
   if CurStep=ssPostInstall then
     begin
-      SuppressibleMsgBox('Please refer the following guidant for additional installation(s) from end-user side!', mbInformation, MB_OK, MB_OK);
+      SuppressibleMsgBox('Additional installations are available. Please refer to the following instructions for details.', mbInformation, MB_OK, MB_OK);
       GetWindowsVersionEx(Version);
       if (Version.NTPlatform) and (Version.Major>=6) then
         begin
