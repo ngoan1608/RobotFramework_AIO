@@ -23,6 +23,7 @@
 #ifdef SubVersion
    #define RobotFrameworkSubVersion " - " + SubVersion
    #define RobotFrameworkSubName "_" + SubVersion
+   #define MyAppName "RobotFramework AIO (All In One) with " + SubVersion + " core"
 #endif
 
 #ifndef RobotFrameworkVersion
