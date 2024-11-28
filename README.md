@@ -15,11 +15,18 @@ This respository holds the build tooling for a new Robot Framework AIO (All In
 One) setup for both Windows and Linux.
 
 ## Attention
-If you want to use RobotFramework AIO for test case development or -exeuction
-then please download RobotFramework AIO from [http://robotframework-aio.org](http://robotframework-aio.org).
+If you want to use RobotFramework AIO for test case development or test case exeuction
+then please download a RobotFramework AIO installer
+from here: [http://robotframework-aio.org](http://robotframework-aio.org).
 
-If you want to contribute to develop RobotFramework AIO, then please proceed
-here.
+If you want to contribute to develop RobotFramework AIO, and therefore build it 
+manually, then please proceed here.
+
+Consider also: In most cases it's not required to build manually. Our 
+RobotFramework AIO actions can do this.
+Contribution is also possible by just working on the repository where
+you want to contribute. Most of the repositories have no dependency on
+the overall build and run also stand-alone.
 
 ## Table of Contents  <!-- omit in toc -->
 
@@ -45,6 +52,8 @@ here.
 ### Manual build
 Currently, RobotFramework AIO is supported to build with both **Windows** and 
 **Linux** environments.
+Consider that a manual build is in most cases not required. 
+RobotFramework AIO actions can build for you.
 
 #### Preconditions
 Building a RobotFramework AIO installer includes rendering the documentation. 
