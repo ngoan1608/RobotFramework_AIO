@@ -279,7 +279,7 @@ function generate_version_info() {
 
 	add_line_to_file "Installer version:"
 	add_line_to_file "******************"
-	add_line_to_file "RobotFramework AIO (OSS) ${RobotFrameworkVersion} (${SubVersion} core)"
+	add_line_to_file "RobotFramework AIO (${VARIANT}) ${RobotFrameworkVersion} (${SubVersion} core)"
 	add_line_to_file ""
 	add_line_to_file "Web sites:"
 	add_line_to_file "**********"
