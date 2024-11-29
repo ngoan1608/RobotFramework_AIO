@@ -279,7 +279,7 @@ function generate_version_info() {
 
 	add_line_to_file "Installer version:"
 	add_line_to_file "******************"
-	add_line_to_file "RobotFramework AIO (OSS)  ${RobotFrameworkVersion}"
+	add_line_to_file "RobotFramework AIO (${VARIANT}) ${RobotFrameworkVersion} (${SubVersion} core)"
 	add_line_to_file ""
 	add_line_to_file "Web sites:"
 	add_line_to_file "**********"
@@ -296,7 +296,7 @@ function generate_version_info() {
 	add_line_to_file "Other tools:"
 	add_line_to_file "************"
 	add_line_to_file "    + VS Codium version: $VERSION_VSCODIUM"
-	add_line_to_file "	  + Node.js version: $VERSION_NODEJS"
+	add_line_to_file "    + Node.js version: $VERSION_NODEJS"
 	add_line_to_file "    + Android SDK Build Tool version: $VERSION_BUILD_TOOL"
 	add_line_to_file "    + Android SDK Platform Tool version: $VERSION_PLATFORM_TOOL"
 	add_line_to_file "    + Appium Inspector version: $VERSION_APPIUM_INSPECTOR"
