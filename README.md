@@ -8,7 +8,7 @@
 
 -->
 
-# RobotFramework AIO  <!-- omit in toc -->
+# RobotFramework AIO (All In One) <!-- omit in toc -->
 [![Build RobotFramework AIO packages](https://github.com/test-fullautomation/RobotFramework_AIO/actions/workflows/build_robotframework_aio.yml/badge.svg?event=push)](https://github.com/test-fullautomation/RobotFramework_AIO/actions/workflows/build_robotframework_aio.yml)
 
 This respository holds the build tooling for a new RobotFramework AIO (All In 
