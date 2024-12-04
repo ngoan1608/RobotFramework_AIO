@@ -14,9 +14,9 @@
 This respository holds the build tooling for a new RobotFramework AIO (All In 
 One) installer for both Windows and Linux.
 
-RobotFramework AIO is built out of many separate repositories. Therefore this repository (https://github.com/test-fullautomation/RobotFramework_AIO/) is the meta-repository for all related repositories.
+RobotFramework AIO is built out of many separate repositories. Therefore this repository (https://github.com/test-fullautomation/RobotFramework_AIO/) is **the meta-repository** for all related repositories.
 
-RobotFramework AIO is therefore also not as pypi package available, but it
+RobotFramework AIO is therefore also **not as pypi package** available, but it
 comes instead as separate Windows or Linux installer.
 
 #
