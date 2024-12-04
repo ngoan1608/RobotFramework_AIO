@@ -120,7 +120,7 @@ jobs:
           ./build --config-file=${REPO_CONFIG} --sub-version=${{ matrix.version }}
 
       - name: Update all documents
-        if: ${{ github.ref_type == 'tag' && matrix.version == 'extended' }}
+        if: ${{ github.ref_type == 'tag' }}
         run: |
           cd ../robotframework-documentation
           doc_branch=automation/task/update-rfw-documents
@@ -131,7 +131,7 @@ jobs:
           git add RobotFrameworkAIO/Components.html
           git add RobotFrameworkAIO/RobotFrameworkAIO_Reference*.pdf
           git add RobotFrameworkAIO/Components.rst
-          git commit -m "Auto update documents in robotframework-documents"
+          git commit -m "Auto update documents of ${{ matrix.version }} version in robotframework-documents"
           git push -u -f doc-repo $doc_branch
           echo -e "\e[32;01mPush all changes completely ... \e[0m"
           
