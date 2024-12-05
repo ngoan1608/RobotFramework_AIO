@@ -20,7 +20,7 @@ RobotFramework AIO is therefore also **not as pypi package** available, but it
 comes instead as separate Windows or Linux installer.
 
 #
-[![Attention](https://https://github.com/test-fullautomation/RobotFramework_AIO/develop/include/png/attention.png)](https://robotframework-aio.org)
+[![Attention](https://github.com/test-fullautomation/RobotFramework_AIO/tree/develop/include/png/attention.png)](https://robotframework-aio.org)
 
 If you want to contribute to develop RobotFramework AIO, and therefore build it 
 manually, then please proceed reading here.
