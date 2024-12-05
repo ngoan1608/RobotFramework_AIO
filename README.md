@@ -22,6 +22,10 @@ comes instead as separate Windows or Linux installer.
 #
 [![Attention](include/png/attention.png)](https://robotframework-aio.org)
 
+Attention! If you want to use RobotFramework AIO for test case development and/or test case execution, 
+then please download a RobotFramework AIO installer from here: https://robotframework-aio.org .
+
+
 If you want to contribute to develop RobotFramework AIO, and therefore build it 
 manually, then please proceed reading here.
 
