@@ -31,7 +31,7 @@ manually, then please proceed reading here.
 
 !! Consider also !! \
 In most cases it's not required to build manually. Our 
-RobotFramework AIO actions can do this for you.
+RobotFramework AIO github ["Actions"](https://github.com/test-fullautomation/RobotFramework_AIO/actions) can do this for you.
 Contribution is also possible by just working on the repository where
 you want to contribute. Most of the repositories have no dependency on
 the overall build and run also stand-alone.
