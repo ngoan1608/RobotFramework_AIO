@@ -816,7 +816,7 @@ Feel free to contact us when you use or intend to use **RobotFramework AIO**. We
 
    "0.13.1." : {
                 "RELEASENOTES"    : ["
-          Dear team,
+          Dear team, (check trigger by commit)
           
           | After hard work we are proud to announce a **new release of the RobotFramework AIO (All In One) for Windows 10, OSD6 Linux, OSD7 Linux and Apertis**.
           | Please feel free to give any feedback about your experiences and wishes!
