@@ -693,7 +693,24 @@ Feel free to contact us when you use or intend to use **RobotFramework AIO**. We
                 "WARNINGS"      : ["          
           This release contains important changes in the component **RobotFramework_TestsuitesManagement**. Tests need to be adapted after installation. For details please refer to the list of changes below.
                                  "],
-                "HIGHLIGHTS"      : ["          
+                "HIGHLIGHTS"      : ["
+          **New**
+     
+          - RobotFramework AIO comes now in two variants:
+            
+            - **extended**
+              uses the Robot Framework fork extended by the RobotFramework AIO team. Details about extensions you find here: `https://robotframework-aio.org <https://robotframework-aio.org/index.html#label_extensions>`_.
+
+            - **original**
+              uses the latest original Robot Framework core.
+          
+          - VSCodium uses `RobotCode <https://robotcode.io/>`_ now instead of deprecated robotframeork-lsp for syntax highlighting.
+
+          - Support to install `GitHub Copilot <https://github.com/features/copilot>`_.
+
+          - DoIP and USD keyword library support now multiple named connections in parallel.
+
+                   
           **General**
           
           - Improved continuous test as part of pipeline.
