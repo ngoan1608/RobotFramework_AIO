@@ -801,7 +801,7 @@ Feel free to contact us when you use or intend to use **RobotFramework AIO**. We
 
    "COMMONLINKS" : [
                     "",
-                    "https://robotframework-aio.org" : "Open Source Origin of RobotFramework AIO",
+                    "https://robotframework-aio.org" ; "Open Source Origin of RobotFramework AIO",
                     "https://htmlpreview.github.io/?https://github.com/test-fullautomation/robotframework-tutorial/blob/develop/robot_framework_tutorial.html; RobotFramework AIO Tutorial",
                     "https://robotframework.org/ ; Open Source Origin of RobotFramework Core", 
                     "https://docs.robotframework.org/docs ; RobotFramework documentation"
