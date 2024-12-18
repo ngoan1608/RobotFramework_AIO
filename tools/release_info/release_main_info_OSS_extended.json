@@ -668,7 +668,7 @@ Feel free to contact us when you use or intend to use **RobotFramework AIO**. We
                 "RELEASENOTES"    : ["
           Dear team,
           
-          | After hard work we are proud to announce a **new release of the RobotFramework AIO (All In One) for Windows 10, OSD6 Linux, OSD7 Linux and Apertis**.
+          | After hard work we are proud to announce a **new release of the RobotFramework AIO (All In One) for Windows 10, Windows 11 and Ubuntu Linux**.
           | Please feel free to give any feedback about your experiences and wishes!
           
           Feel free to contact us when you use or intend to use **RobotFramework AIO**. We are keen to support you!
@@ -715,7 +715,7 @@ Feel free to contact us when you use or intend to use **RobotFramework AIO**. We
           
           - Improved continuous test as part of pipeline.
           
-          - RobotFramework core version 6.0.2 as base.
+          - RobotFramework core version 6.1 as base.
           
           - All preinstalled OSS **RobotFramework AIO** libraries available in OSS Python package index `pypi <https://pypi.org/>`_ now as part of release process: e.g. 
             
@@ -754,14 +754,16 @@ Feel free to contact us when you use or intend to use **RobotFramework AIO**. We
           ----
             
           **Download** 
-            `RobotFramework AIO OSS Windows <https://github.com/test-fullautomation/RobotFramework_AIO/releases/tag/rel%2Faio%2F###VERSION###>`_
+             1. Open drop down "Assets" at the bottom of the release note
+             2. Search OS and **extended** or **original** version as per your wish
+
+              Download from here `RobotFramework AIO OSS <https://github.com/test-fullautomation/RobotFramework_AIO/releases/tag/rel%2Faio%2F###VERSION###>`_
           
-            `RobotFramework AIO OSS Ubuntu <https://github.com/test-fullautomation/RobotFramework_AIO/releases/tag/rel%2Faio%2F###VERSION###/>`_
           
           ----
           
           **How to Install**
-           Chapter 2, page 2 of `RobotFrameworkAIO_Reference.pdf <https://github.com/test-fullautomation/robotframework-documentation/blob/develop/RobotFrameworkAIO/RobotFrameworkAIO_Reference.pdf>`_ 
+           Chapter 2, page 2 of `RobotFrameworkAIO_Reference.pdf <https://robotframework-aio.org/download/RobotFrameworkAIO_Reference_extended.pdf>`_ 
                                           "],                              
           #               "REQUIREMENTS"    : ["
           #               
@@ -799,6 +801,7 @@ Feel free to contact us when you use or intend to use **RobotFramework AIO**. We
 
    "COMMONLINKS" : [
                     "",
+                    "https://robotframework-aio.org" : "Open Source Origin of RobotFramework AIO",
                     "https://htmlpreview.github.io/?https://github.com/test-fullautomation/robotframework-tutorial/blob/develop/robot_framework_tutorial.html; RobotFramework AIO Tutorial",
                     "https://robotframework.org/ ; Open Source Origin of RobotFramework Core", 
                     "https://docs.robotframework.org/docs ; RobotFramework documentation"
