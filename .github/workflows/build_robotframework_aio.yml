@@ -30,6 +30,7 @@ env:
   GITHUB_COPILOT_REF_URL: "https://docs.github.com/en/enterprise-cloud@latest/copilot/managing-copilot/managing-copilot-as-an-individual-subscriber/managing-your-copilot-subscription"
   GITHUB_COPILOT_EXT_ARG: ""
   VARIANT: "OSS"
+  VSCODIUM_PROXY: "http://rb-proxy-de.bosch.com:8080"
 
 jobs:
   tag-repos:
