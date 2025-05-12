@@ -51,6 +51,15 @@ jobs:
         # Start emulator
         emulator -avd test -no-audio -no-window -no-boot-anim &
         adb wait-for-device
+        # Wait until system boot is complete
+        boot_completed=""
+        until [[ "$boot_completed" == "1" ]]; do
+          sleep 5
+          boot_completed=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
+          echo "Waiting for boot... (boot_completed=$boot_completed)"
+        done
+
+        # Now it's safe to send input commands
         adb shell input keyevent 82
 
         # Check adb device
