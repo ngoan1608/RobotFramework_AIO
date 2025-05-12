@@ -10,7 +10,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up JDK 11
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
@@ -19,9 +19,16 @@ jobs:
     - name: Set up Android SDK
       uses: android-actions/setup-android@v3
 
+    - name: Set up AVD directories
+      run: |
+        mkdir -p $HOME/.android/avd
+        echo "ANDROID_AVD_HOME=$HOME/.android/avd" >> $GITHUB_ENV
+
     - name: Create and start Android Emulator
       run: |
+        echo "Installing sdk ..."
         echo "y" | sdkmanager "system-images;android-30;google_apis;x86_64"
+        echo "Creating 'test' avd ..."
         echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;x86_64" --device "pixel"
 
         # Add emulator and tools to PATH
@@ -31,6 +38,9 @@ jobs:
 
         # Reload PATH in current shell
         export PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin
+
+        # Verify emulator
+        emulator -list-avds
 
         # Start emulator
         emulator -avd test -no-audio -no-window -no-boot-anim &
